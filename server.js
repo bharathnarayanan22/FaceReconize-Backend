@@ -72,7 +72,7 @@ app.use(cors())
 async function connectToDb() {
   try {
     await mongoose.connect(
-      "mongodb://localhost:27017/FaceUsers"
+      "mongodb+srv://Bharath:bharath22@cluster0.0ezxyyp.mongodb.net/faceRecognizeUsers"
     );
     console.log("DB connection established");
     const port = process.env.PORT || 7000
