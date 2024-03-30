@@ -107,31 +107,10 @@ app.post("/add-faceUsers", async function (request, response) {
   }
 });
 
-// app.get("/get-faceUsers", async function (request, response) {
-//   try {
-//     const faceUsersDetails = await faceUsers.find();
-//     response.status(200).json(faceUsersDetails);
-//   } catch (error) {
-//     response.status(500).json({
-//       "status": "failure",
-//       "message": "entry not fetch data",
-//       "error": error,
-//     });
-//   }
-// });
-
 app.get("/get-faceUsers", async function (request, response) {
   try {
-    const faceUsersDetails = await faceUsers.find().lean(); // Fetch users as plain JavaScript objects
-    // Extract descriptors from faceUsersDetails and include them in the response
-    const usersWithDescriptors = await Promise.all(faceUsersDetails.map(async (user) => {
-      const descriptors = await faceapi.detectSingleFace(user.image);
-      return {
-        ...user,
-        descriptor: descriptors.descriptor
-      };
-    }));
-    response.status(200).json(usersWithDescriptors);
+    const faceUsersDetails = await faceUsers.find();
+    response.status(200).json(faceUsersDetails);
   } catch (error) {
     response.status(500).json({
       "status": "failure",
@@ -140,3 +119,24 @@ app.get("/get-faceUsers", async function (request, response) {
     });
   }
 });
+
+// app.get("/get-faceUsers", async function (request, response) {
+//   try {
+//     const faceUsersDetails = await faceUsers.find().lean(); // Fetch users as plain JavaScript objects
+//     // Extract descriptors from faceUsersDetails and include them in the response
+//     const usersWithDescriptors = await Promise.all(faceUsersDetails.map(async (user) => {
+//       const descriptors = await faceapi.detectSingleFace(user.image);
+//       return {
+//         ...user,
+//         descriptor: descriptors.descriptor
+//       };
+//     }));
+//     response.status(200).json(usersWithDescriptors);
+//   } catch (error) {
+//     response.status(500).json({
+//       "status": "failure",
+//       "message": "entry not fetch data",
+//       "error": error,
+//     });
+//   }
+// });
